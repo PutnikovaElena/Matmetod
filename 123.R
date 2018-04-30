@@ -1,8 +1,14 @@
 rm(list=ls())
 setwd("C:/ZAN/Matmetod")
 #установак пакетов
-
-#install.packages('tidyverse', 'tidyr', 'string','dplyr','tibble','readr','ggplot2','ggplot2')
+install.packages(tidyverse)
+install.packages(tidyr)
+install.packages(string)
+install.packages(dplyr)
+install.packages(tibble)
+install.packages(readr)
+install.packages(ggplot2)
+install.packages(ggplot2)
 # включаем библиотеки
 #library("dplyr")
 library("tidyverse")
