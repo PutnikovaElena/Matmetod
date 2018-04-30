@@ -61,15 +61,15 @@ cor_td = cor(data_numeric)
 cor_td
 # убираем значение NA
 cor_td = cor(drop_na(data_numeric))
-cor_td = cor(drop_na(data_numeric)) %>% as.data.frame %>% select(co2_flux)
-vars = row.names(cor_td)[cor_td$co2_flux^2 > .2] %>% na.exclude
+cor_td = cor(drop_na(data_numeric)) %>% as.data.frame %>% select(h2o_flux)
+vars = row.names(cor_td)[cor_td$h2o_flux^2 > .2] %>% na.exclude
 vars
 # собираем формулу из вектора
-formula = as.formula(paste("co2_flux~", paste(vars,collapse = "+"), sep=""))
+formula = as.formula(paste("h2o_var~", paste(vars,collapse = "+"), sep=""))
 formula
 # Построение модели
-fit = lm(co2_flux ~ Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
-           rand_err_LE + h2o_flux + qc_h2o_flux + rand_err_h2o_flux + 
+fit = lm(h2o_flux ~ co2_flux + Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
+           rand_err_LE + qc_h2o_flux + rand_err_h2o_flux + 
            h2o_time_lag + sonic_temperature + air_temperature + air_density + 
            air_molar_volume + es + RH + VPD + u_star_ + TKE + T_star_ + 
            un_Tau + un_H + un_LE + un_co2_flux + un_h2o_flux + u_var + 
@@ -78,8 +78,8 @@ fit = lm(co2_flux ~ Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE +
 anova(fit)
 
 #взаимодействие второго порядка
-fit1= lm(co2_flux ~ (Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
-                       rand_err_LE + h2o_flux + qc_h2o_flux + rand_err_h2o_flux + 
+fit1= lm(h2o_flux ~ (co2_flux+ Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
+                       rand_err_LE + qc_h2o_flux + rand_err_h2o_flux + 
                        h2o_time_lag + sonic_temperature + air_temperature + air_density + 
                        air_molar_volume + es + RH + VPD + u_star_ + TKE + T_star_ + 
                        un_Tau + un_H + un_LE + un_co2_flux + un_h2o_flux + u_var + 
@@ -87,8 +87,8 @@ fit1= lm(co2_flux ~ (Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE +
                        w_div_h2o_cov + flowrate)^2, data = teaching_data_unq)
 anova(fit1)
 #удаляем переменные и взаимодействия которые не значимы
-fit2= lm(co2_flux ~ (Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
-                       rand_err_LE + h2o_flux + qc_h2o_flux + rand_err_h2o_flux + 
+fit2= lm(h2o_flux ~ (co2_flux + Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
+                       rand_err_LE + qc_h2o_flux + rand_err_h2o_flux + 
                        h2o_time_lag + sonic_temperature + air_temperature + air_density + 
                        air_molar_volume + es + RH + VPD + u_star_ + TKE + T_star_ + 
                        un_Tau + un_H + un_LE + un_co2_flux + un_h2o_flux + u_var + 
